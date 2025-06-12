@@ -1,0 +1,7 @@
+Necessário desenvolver ferramentas que possam otmizar processos administrativos que são bastante impactados devido a limitações do sistema da ferramenta de utilizada para controle de vendas, finanças e afins.
+No momento, minha supervisora está lidando com um relatório em pdf de 48 páginas que contém algumas informações que são importante, mas também possui muitas outras que não são relevantes para esse relatório. Muitas páginas e muitas snapses podem ser economizadas se a gente pegar esse relatório, extrair os dados sem erros ou mudanças e jogar no pandas.
+
+Pensei em usar o docling, mas vi que ele convet em json, que també pode ser usado no pandas, mas não estou convencido que seja o formato ideal.
+Gostaria de saber quais outras ferramentas podem ser utilizadas para essa conversão e posteriormente vou transpor essa apresentação com o dataframe no streamlit.
+
+Pode fazer uma pesquisar e tentar me ajuda nessa jornada?
