@@ -5,6 +5,7 @@
 *.xls
 *.json
 *.xml
+notas.md
 
 # Diretórios de dados sensíveis
 data/

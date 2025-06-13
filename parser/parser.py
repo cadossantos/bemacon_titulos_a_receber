@@ -1,4 +1,5 @@
 # parser/parser.py
+
 import pdfplumber
 import pandas as pd
 from pathlib import Path
