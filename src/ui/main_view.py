@@ -2,6 +2,7 @@
 Componentes da interface principal da aplicação.
 """
 
+# from pathlib import Path
 import streamlit as st
 import pandas as pd
 from typing import Optional
@@ -101,6 +102,12 @@ class MainViewComponents:
             df: DataFrame com os dados filtrados
             arquivo_processado: Nome do arquivo processado (se houver)
         """
+
+        # Exibir logo
+        # caminho_logo = Path("assets/logo.webp")
+        # if caminho_logo.exists():
+        #     st.image(str(caminho_logo))
+            
         # Título
         MainViewComponents.titulo_principal()
         

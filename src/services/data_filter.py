@@ -3,8 +3,10 @@ Serviço responsável por aplicar filtros aos dados do relatório.
 """
 
 import pandas as pd
+import re
 from typing import Tuple, Optional
 from ..config import FiltroRelatorio
+from ..utils.funcionarios import FUNCIONARIO_PARA_LOJA
 
 
 class DataFilterService:
@@ -43,6 +45,51 @@ class DataFilterService:
             df_filtrado = DataFilterService._filtrar_por_valor(
                 df_filtrado, filtros.valor_min, filtros.valor_max
             )
+        
+        # Filtro: títulos atrasados
+        if filtros.atrasados and filtros.tempo_atraso:
+            hoje = pd.Timestamp.today()
+            dias_limite = filtros.tempo_atraso * (7 if filtros.mes_corrente else 30)
+
+            df_filtrado = df_filtrado[df_filtrado["Vencimento"] < hoje]
+            df_filtrado = df_filtrado[(hoje - df_filtrado["Vencimento"]).dt.days <= dias_limite]
+
+        # Filtro: cobranças futuras
+        if filtros.cobrancas_futuras and filtros.dias_futuros:
+            hoje = pd.Timestamp.today()
+            limite = hoje + pd.Timedelta(days=filtros.dias_futuros)
+
+            df_filtrado = df_filtrado[
+                (df_filtrado["Vencimento"] > hoje) &
+                (df_filtrado["Vencimento"] <= limite)
+            ]
+
+        # Filtro: Somente Funcionários
+        if filtros.somente_funcionarios:
+            # Normalizar nomes para comparação
+            nomes_funcionarios = {nome.lower(): loja for nome, loja in FUNCIONARIO_PARA_LOJA.items()}
+
+            # Filtrar apenas clientes que são funcionários
+            df_filtrado["Cliente_normalizado"] = (
+                df_filtrado["Cliente"]
+                .str.replace(r"\s*\(FUNCION[AÁ]RIO\)", "", flags=re.IGNORECASE, regex=True)
+                .str.lower()
+                .str.normalize("NFKD")
+                .str.encode("ascii", errors="ignore")
+                .str.decode("utf-8")
+            )
+            df_filtrado = df_filtrado[df_filtrado["Cliente_normalizado"].isin(nomes_funcionarios.keys())]
+
+            # Adicionar coluna Loja
+            df_filtrado["Funcionário"] = df_filtrado["Cliente_normalizado"].map(nomes_funcionarios)
+
+            # Aplicar filtro de loja, se necessário
+            if filtros.loja != "Todas" and "Funcionário" in df_filtrado.columns:
+                df_filtrado = df_filtrado[df_filtrado["Funcionário"] == filtros.loja]
+            
+            if "Cliente_normalizado" in df_filtrado.columns:
+                df_filtrado.drop(columns=["Cliente_normalizado"], inplace=True)
+
         
         return df_filtrado
     

@@ -1,0 +1,50 @@
+.
+├── app.py
+├── media
+│   ├── CREDIARIO_JUN25.pdf
+│   └── __init__.py
+├── notas.md
+├── parser
+│   ├── __init__.py
+│   ├── parser.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-311.pyc
+│   │   └── parser.cpython-311.pyc
+│   └── relatorio.csv
+├── parser_pdf_manual.py
+├── poetry.lock
+├── pyproject.toml
+├── README.md
+├── src
+│   ├── config.py
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── config.cpython-311.pyc
+│   │   └── __init__.cpython-311.pyc
+│   ├── services
+│   │   ├── data_filter.py
+│   │   ├── __init__.py
+│   │   ├── pdf_parser.py
+│   │   ├── pdf_processor.py
+│   │   └── __pycache__
+│   │       ├── data_filter.cpython-311.pyc
+│   │       ├── __init__.cpython-311.pyc
+│   │       ├── pdf_parser.cpython-311.pyc
+│   │       └── pdf_processor.cpython-311.pyc
+│   ├── ui
+│   │   ├── __init__.py
+│   │   ├── main_view.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-311.pyc
+│   │   │   ├── main_view.cpython-311.pyc
+│   │   │   └── sidebar.cpython-311.pyc
+│   │   └── sidebar.py
+│   └── utils
+│       ├── formatters.py
+│       ├── __init__.py
+│       └── __pycache__
+│           ├── formatters.cpython-311.pyc
+│           └── __init__.cpython-311.pyc
+└── tree.txt
+
+12 directories, 36 files

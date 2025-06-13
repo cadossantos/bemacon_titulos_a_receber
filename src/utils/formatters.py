@@ -3,6 +3,7 @@ Utilitários para formatação de dados.
 """
 
 import pandas as pd
+import re
 from typing import Union
 
 
@@ -82,6 +83,19 @@ def preparar_dataframe_visualizacao(df: pd.DataFrame) -> pd.DataFrame:
         if coluna in df_formatado.columns:
             df_formatado[coluna] = formatar_coluna_valor(df_formatado[coluna])
     
+    # Reorganizar colunas: colocar "Funcionário" ao lado de "Cliente"
+    colunas = list(df_formatado.columns)
+    if "Cliente" in colunas and "Funcionário" in colunas:
+        colunas.remove("Funcionário")
+        idx_cliente = colunas.index("Cliente")
+        colunas.insert(idx_cliente + 1, "Funcionário")
+        df_formatado = df_formatado[colunas]
+    # Remover sufixos como (FUNCIONÁRIO) dos nomes visíveis
+    if "Cliente" in df_formatado.columns:
+        df_formatado["Cliente"] = df_formatado["Cliente"].str.replace(
+            r"\s*\(FUNCION[AÁ]RIO\)", "", flags=re.IGNORECASE, regex=True
+        )
+
     return df_formatado
 
 
